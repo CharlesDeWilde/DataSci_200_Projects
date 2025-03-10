@@ -8,11 +8,11 @@ If my balance is in the red, I bid minimally to avoid further losses.
 
 class Bidder:
     """
-    A bidder that adapts its bid based on previous rounds.
+    My attempt at a bidder that adapts its bid based on previous rounds and "learning" from previous rounds.
     """
     def __init__(self, num_users, num_rounds):
         """
-        Set up the bidder with the auction settings.
+        Setting up the bidder with the auction settings.
         
         Args:
             num_users (int): The total number of users in the auction.
@@ -30,10 +30,10 @@ class Bidder:
         Decide how much to bid based on what I've learned from previous rounds.
         
         Strategy:
-          - If my balance is negative, bid minimally (0.0) to avoid further losses.
-          - In the first round, bid $1.00.
+          - If my balance is negative, bid 0 or (0.0) to avoid further losses and end up below 0 and broke.
+          - In the first round, bid $1.00 if noone has a bid.
           - Otherwise, calculate the average winning price from history and add $0.01.
-          - Also, ensure I never bid more than my current balance.
+          - Also, ensure I never bid more than my current balance to go into the red.
         
         Args:
             _user_id (int): The user I'm bidding for.
@@ -60,7 +60,7 @@ class Bidder:
         """
         Update my records after each auction round.
         
-        I record the winning price to adjust future bids.
+        I record the winning price to adjust my future bids.
         If I win the round, update my balance by adding $1 (if the ad was clicked)
         and subtracting the price paid.
         
